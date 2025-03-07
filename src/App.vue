@@ -12,15 +12,21 @@ const addTodo = computed(() => {
     inputNote.value = "";
     return;
   }
+  let shownFlag = true;
+  if (eventColor !== null && eventColor.target.innerText === "Completed Task") {
+    shownFlag = false;
+  }
+
   const newNote = {
     id: Date.now(),
     text: inputNote.value,
     isCompleted: false,
     isEditing: false,
-    isShowed: true,
+    isShowed: shownFlag,
   };
   notes.value.push(newNote);
   inputNote.value = "";
+  checkAllSelected();
 });
 
 // Selected Item - Hover
@@ -34,6 +40,7 @@ function selectList(note) {
 
 // Edit Text on List Item
 function editTextOnListItem(note) {
+  checkAllSelected();
   if (note.isEditing) {
     if (note.text.trim().length === 0) {
       alert("Empty Field :(");
@@ -47,6 +54,7 @@ function editTextOnListItem(note) {
 // Delete single selected item
 function clickedSingleDeleteButton(note) {
   notes.value = notes.value.filter((n) => n.id !== note.id);
+  checkAllSelected();
 }
 
 // Show All Completed Task
@@ -88,7 +96,7 @@ function checkAllSelected() {
     element.isCompleted ? countTrue++ : countFalse++
   );
 
-  if (countFalse == 0) {
+  if (countFalse == 0 && countTrue) {
     selectAllTitle.value = "Unselect All";
   } else {
     selectAllTitle.value = "Select All";

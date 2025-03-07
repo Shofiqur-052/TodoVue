@@ -84,7 +84,7 @@ function clearCompletedTask() {
 // Add hover effect on button
 function hoverButton(event) {
   const buttonID = event.target.id;
-  if (buttonID == 1 || buttonID == 5) return;
+  if (buttonID == 1 || buttonID == 5 || buttonID == "") return;
 
   if (eventColor != null) eventColor.target.style.backgroundColor = "";
   event.target.style.backgroundColor = "lightblue";
@@ -116,6 +116,18 @@ function selectUnselectAll() {
     selectAllTitle.value = "Select All";
   }
   notes.value.forEach((element) => (element.isCompleted = flag));
+  updateList(selectAllTitle.value);
+}
+
+// Update Complete Remaining List
+function updateList(selectedTitle) {
+  let buttonId = eventColor.target.id;
+
+  if (buttonId == 2 && selectedTitle == "Unselect All") {
+    showCompletedTask();
+  } else if (buttonId == 3 && selectedTitle == "Select All") {
+    showRemainingTask();
+  }
 }
 </script>
 
@@ -125,7 +137,7 @@ function selectUnselectAll() {
       <button id="1" @click="selectUnselectAll">
         {{ selectAllTitle }}
       </button>
-      <button id="2" @click="showCompletedTask" :class="{ leftMargin: true }">
+      <button id="2" @click="showCompletedTask" :class="{ leftMarginE: true }">
         Completed Task
       </button>
       <button id="3" @click="showRemainingTask" :class="{ leftMargin: true }">
@@ -134,7 +146,7 @@ function selectUnselectAll() {
       <button id="4" @click="showAllTask" :class="{ leftMargin: true }">
         Show All
       </button>
-      <button id="5" @click="clearCompletedTask" :class="{ leftMargin: true }">
+      <button id="5" @click="clearCompletedTask" :class="{ leftMarginE: true }">
         Clear Completed
       </button>
     </div>
@@ -214,6 +226,10 @@ function selectUnselectAll() {
   margin-left: 5px;
 }
 
+.leftMarginE {
+  margin-left: 15px;
+}
+
 body {
   display: table;
   margin: auto;
@@ -246,7 +262,7 @@ body {
   top: 50%;
   right: 0px;
   transform: translateY(-50%);
-  height: 30px;
+  height: 29px;
 }
 
 #deleteBtnID {
@@ -294,9 +310,9 @@ body {
   top: 50%;
   left: 0px;
   transform: translateY(-50%);
-  height: 31px;
+  height: 30px;
   width: 552px;
-
+  /* width: 473px; */
   border-radius: 2pt;
   border-color: cornflowerblue;
   border-width: 1pt;

@@ -83,6 +83,9 @@ function clearCompletedTask() {
 
 // Add hover effect on button
 function hoverButton(event) {
+  const buttonID = event.target.id;
+  if (buttonID == 1 || buttonID == 5) return;
+
   if (eventColor != null) eventColor.target.style.backgroundColor = "";
   event.target.style.backgroundColor = "lightblue";
   eventColor = event;
@@ -119,11 +122,21 @@ function selectUnselectAll() {
 <template>
   <body>
     <div class="optionSectionID" @click="hoverButton">
-      <button @click="selectUnselectAll">{{ selectAllTitle }}</button>
-      <button @click="showCompletedTask">Completed Task</button>
-      <button @click="showRemainingTask">Remaining Task</button>
-      <button @click="showAllTask">Show All</button>
-      <button @click="clearCompletedTask">Clear Completed</button>
+      <button id="1" @click="selectUnselectAll">
+        {{ selectAllTitle }}
+      </button>
+      <button id="2" @click="showCompletedTask" :class="{ leftMargin: true }">
+        Completed Task
+      </button>
+      <button id="3" @click="showRemainingTask" :class="{ leftMargin: true }">
+        Remaining Task
+      </button>
+      <button id="4" @click="showAllTask" :class="{ leftMargin: true }">
+        Show All
+      </button>
+      <button id="5" @click="clearCompletedTask" :class="{ leftMargin: true }">
+        Clear Completed
+      </button>
     </div>
 
     <div>
@@ -193,19 +206,18 @@ function selectUnselectAll() {
   background-color: rgb(168, 196, 224);
 }
 
-.buttonHovered {
-  background-color: lightblue;
-}
-
 .editColor {
   background-color: rgb(138, 197, 255);
+}
+
+.leftMargin {
+  margin-left: 5px;
 }
 
 body {
   display: table;
   margin: auto;
   margin-top: 40px;
-  /* background-color: lightslategray; */
 }
 
 #todoList {
@@ -254,7 +266,6 @@ body {
   transform: translateY(-50%);
   height: 30px;
   width: 55px;
-  /* background-color: rgb(138, 197, 255); */
 }
 
 #saveButtonID {
